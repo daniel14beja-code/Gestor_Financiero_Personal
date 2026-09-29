@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GestorF – Iniciar Sesión</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="card">
+    <h2>Bienvenido a <span>GestorF</span></h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:24px;">Tu gestor de finanzas personales</p>
+
+    <div id="error" class="alert-error" style="display:none;"></div>
+    <div id="exito" class="alert-error" style="display:none;background:rgba(74,222,128,0.1);border-color:var(--success);color:var(--success);"></div>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" id="username" autofocus>
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" id="password">
+    </div>
+    <button class="btn btn-primary" onclick="login()">Iniciar sesión</button>
+
+    <div class="actions">
+      <a href="registro.html" class="link">¿No tienes cuenta? Regístrate →</a>
+    </div>
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html>
