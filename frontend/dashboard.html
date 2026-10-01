@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GestorF – Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { padding: 0; align-items: stretch; }
+    .dash-wrapper { display:flex; flex-direction:column; min-height:100vh; width:100%; }
+    .dash-header { background:var(--surface); border-bottom:1px solid var(--border); padding:14px 32px; display:flex; justify-content:space-between; align-items:center; }
+    .brand { font-size:1.2rem; font-weight:700; color:var(--text); }
+    .brand span { color:var(--accent); }
+    .dash-user { display:flex; align-items:center; gap:14px; font-size:0.88rem; color:var(--muted); }
+    .dash-body { display:flex; flex:1; }
+    .dash-sidebar { width:220px; min-width:220px; background:var(--surface); border-right:1px solid var(--border); padding:24px 0; }
+    .sidebar-label { font-size:0.7rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:0 20px; margin-bottom:10px; }
+    .sidebar-link { display:block; padding:10px 20px; color:var(--muted); text-decoration:none; font-size:0.9rem; border-left:3px solid transparent; transition:all 0.15s; cursor:pointer; }
+    .sidebar-link:hover { color:var(--text); background:rgba(108,99,255,0.07); border-left-color:var(--accent); }
+    .sidebar-link.admin-link { color:var(--accent); }
+    .dash-content { flex:1; padding:32px; overflow-y:auto; }
+    .balance-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+    .balance-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 24px; }
+    .balance-card .label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+    .balance-card .valor { font-size:1.6rem; font-weight:700; }
+    .valor.ingreso { color:var(--success); }
+    .valor.gasto { color:var(--danger); }
+  </style>
+</head>
+<body>
+<div class="dash-wrapper">
+  <div class="dash-header">
+    <div class="brand">Gestor<span>F</span></div>
+    <div class="dash-user">
+      <span>Hola, <strong id="nombreUsuario"></strong></span>
+      <span id="badgePerfil" class="badge"></span>
+      <button onclick="logout()" class="btn btn-secondary" style="padding:6px 14px;font-size:0.82rem;">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <div class="dash-sidebar">
+      <div class="sidebar-label">Menú</div>
+      <a href="dashboard.html" class="sidebar-link">🏠 Inicio</a>
+      <a href="registros.html" class="sidebar-link">📋 Ver registros</a>
+      <a href="regIngreso.html" class="sidebar-link">➕ Registrar ingreso</a>
+      <a href="regGasto.html" class="sidebar-link">➖ Registrar gasto</a>
+      <a href="balance.html" class="sidebar-link">📊 Ver balance</a>
+      <a href="auditoria.html" class="sidebar-link">🔍 Auditoría</a>
+
+      <div id="menuAdmin" style="display:none;">
+        <div class="sidebar-label" style="margin-top:20px;">Administración</div>
+        <a href="gestionPerfiles.html" class="sidebar-link admin-link">👤 Gestión de perfiles</a>
+        <a href="listaUsuarios.html" class="sidebar-link admin-link">👥 Lista de usuarios</a>
+      </div>
+
+      <a onclick="logout()" class="sidebar-link" style="margin-top:20px;">🚪 Cerrar sesión</a>
+    </div>
+
+    <div class="dash-content">
+      <h2 style="margin-bottom:24px;">Resumen financiero</h2>
+
+      <div class="balance-grid">
+        <div class="balance-card">
+          <div class="label">Total ingresos</div>
+          <div class="valor ingreso" id="totalIngresos">$0.00</div>
+        </div>
+        <div class="balance-card">
+          <div class="label">Total gastos</div>
+          <div class="valor gasto" id="totalGastos">$0.00</div>
+        </div>
+        <div class="balance-card">
+          <div class="label">Balance actual</div>
+          <div class="valor" id="balanceActual">$0.00</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <a href="regIngreso.html" class="btn btn-primary" style="width:auto;padding:10px 24px;">+ Registrar ingreso</a>
+        <a href="regGasto.html" class="btn btn-secondary" style="padding:10px 24px;">− Registrar gasto</a>
+        <a href="registros.html" class="btn btn-secondary" style="padding:10px 24px;">Ver todos los registros</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

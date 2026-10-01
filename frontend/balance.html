@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GestorF – Balance</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { padding: 30px; align-items: flex-start; }
+    .balance-big { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:40px; max-width:500px; }
+    .balance-row { display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); font-size:1rem; }
+    .balance-row:last-child { border-bottom:none; font-size:1.3rem; font-weight:700; padding-top:20px; }
+  </style>
+</head>
+<body>
+  <h2 style="margin-bottom:24px;">Mi <span style="color:var(--accent)">Balance</span></h2>
+  <div class="balance-big">
+    <div class="balance-row">
+      <span>Total ingresos</span>
+      <span style="color:var(--success)" id="ingresos">$0.00</span>
+    </div>
+    <div class="balance-row">
+      <span>Total gastos</span>
+      <span style="color:var(--danger)" id="gastos">$0.00</span>
+    </div>
+    <div class="balance-row">
+      <span>Balance actual</span>
+      <span id="balance">$0.00</span>
+    </div>
+  </div>
+  <div class="actions" style="margin-top:20px;">
+    <a href="dashboard.html" class="link">← Volver al inicio</a>
+  </div>
+  <script src="js/balance.js"></script>
+</body>
+</html>
