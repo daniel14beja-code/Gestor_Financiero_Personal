@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+// ← PRIMERO: rutas específicas
+router.get('/usuarios', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT u.*, p.perfil FROM usuarios u JOIN perfiles p ON u.id_perfil = p.id_perfil ORDER BY u.id_usuario'
+        );
+        res.json({ ok: true, data: rows });
+    } catch (e) {
+        res.status(500).json({ ok: false, mensaje: e.message });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM perfiles ORDER BY id_perfil');
@@ -33,6 +45,7 @@ router.put('/asignar', async (req, res) => {
     }
 });
 
+// ← ÚLTIMO: rutas con parámetro dinámico
 router.delete('/:id', async (req, res) => {
     try {
         await db.query('DELETE FROM perfiles WHERE id_perfil=?', [req.params.id]);

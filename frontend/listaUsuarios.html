@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GestorF – Lista de Usuarios</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>body { padding: 30px; align-items: flex-start; }</style>
+</head>
+<body>
+  <div class="page-header" style="max-width:1000px;">
+    <h2>Lista de <span style="color:var(--accent)">Usuarios</span></h2>
+    <a href="dashboard.html" class="btn btn-secondary">← Volver</a>
+  </div>
+
+  <div class="table-wrapper" style="max-width:1000px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Username</th>
+          <th>Perfil</th>
+          <th>Estado</th>
+          <th>Fecha registro</th>
+        </tr>
+      </thead>
+      <tbody id="tablaUsuarios">
+        <tr><td colspan="6" style="text-align:center;color:var(--muted);">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="js/listaUsuarios.js"></script>
+</body>
+</html>

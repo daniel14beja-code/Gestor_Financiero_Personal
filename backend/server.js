@@ -15,19 +15,20 @@ app.use(session({
     secret: 'gestorf_secret_2026',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 1000 * 60 * 60 } // 1 hora
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 }
 }));
 
-// Servir archivos estáticos del frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
-
-// Rutas
+// ← RUTAS PRIMERO, ANTES de los archivos estáticos
 app.use('/auth',          require('./routes/auth'));
 app.use('/transacciones', require('./routes/transacciones'));
 app.use('/balance',       require('./routes/balance'));
 app.use('/categorias',    require('./routes/categorias'));
 app.use('/auditoria',     require('./routes/auditoria'));
 app.use('/perfiles',      require('./routes/perfiles'));
+app.use('/usuarios',      require('./routes/usuarios'));
+
+// ← ARCHIVOS ESTÁTICOS AL FINAL
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Iniciar servidor
 app.listen(3000, () => {
