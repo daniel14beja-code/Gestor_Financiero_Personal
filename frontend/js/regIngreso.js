@@ -1,9 +1,6 @@
-async function verificarSesion() {
-    const res = await fetch('/auth/sesion', { credentials: 'include' });
-    const data = await res.json();
-    if (!data.ok) { window.location.href = 'login.html'; return; }
+async function init() {
+    await cargarSidebar();
     cargarCategorias();
-    // Fecha de hoy por defecto
     document.getElementById('fecha').valueAsDate = new Date();
 }
 
@@ -45,4 +42,4 @@ async function registrar() {
     }
 }
 
-verificarSesion();
+init();

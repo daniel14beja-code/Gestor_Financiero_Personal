@@ -1,8 +1,5 @@
-async function verificarSesion() {
-    const res  = await fetch('/auth/sesion', { credentials: 'include' });
-    const data = await res.json();
-    if (!data.ok) { window.location.href = 'login.html'; return; }
-    if (data.usuario.idPerfil !== 1) { window.location.href = 'dashboard.html'; return; }
+async function init() {
+    await cargarSidebar();
     cargarUsuarios();
 }
 
@@ -31,4 +28,4 @@ async function cargarUsuarios() {
     }).join('');
 }
 
-verificarSesion();
+init();

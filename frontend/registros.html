@@ -5,41 +5,50 @@
   <title>GestorF – Registros</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    body { padding: 30px; align-items: flex-start; }
+    body { padding: 0; align-items: stretch; }
     .header-acciones { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; width:100%; max-width:1000px; }
   </style>
 </head>
 <body>
 
-  <div class="header-acciones">
-    <h2>Mis <span style="color:var(--accent)">Registros</span></h2>
-    <div style="display:flex;gap:8px;">
-      <a href="regIngreso.html" class="btn btn-secondary">+ Ingreso</a>
-      <a href="regGasto.html"   class="btn btn-secondary">− Gasto</a>
-      <a href="dashboard.html"  class="btn btn-secondary">← Volver</a>
+<div class="app-layout">
+
+  <div id="sidebar"></div>
+
+  <div class="main-content">
+    <div class="header-acciones">
+      <h2>Mis <span style="color:var(--accent)">Registros</span></h2>
+      <div style="display:flex;gap:8px;">
+        <a href="regIngreso.html" class="btn btn-secondary">+ Ingreso</a>
+        <a href="regGasto.html"   class="btn btn-secondary">− Gasto</a>
+        <a href="dashboard.html"  class="btn btn-secondary">← Volver</a>
+      </div>
+    </div>
+
+    <div id="mensaje" class="alert-error" style="display:none;max-width:1000px;width:100%;margin-bottom:16px;"></div>
+
+    <div class="table-wrapper" style="max-width:1000px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Monto</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaRegistros">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);">Cargando...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div id="mensaje" class="alert-error" style="display:none;max-width:1000px;width:100%;margin-bottom:16px;"></div>
+</div>
 
-  <div class="table-wrapper" style="max-width:1000px;">
-    <table>
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Tipo</th>
-          <th>Categoría</th>
-          <th>Descripción</th>
-          <th>Monto</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="tablaRegistros">
-        <tr><td colspan="6" style="text-align:center;color:var(--muted);">Cargando...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <script src="js/registros.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/registros.js"></script>
 </body>
 </html>

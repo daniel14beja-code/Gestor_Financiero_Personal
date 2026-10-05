@@ -1,7 +1,5 @@
-async function verificarSesion() {
-    const res = await fetch('/auth/sesion', { credentials: 'include' });
-    const data = await res.json();
-    if (!data.ok) { window.location.href = 'login.html'; return; }
+async function init() {
+    await cargarSidebar();
     cargarRegistros();
 }
 
@@ -61,4 +59,4 @@ function mostrarMensaje(texto, exito) {
     setTimeout(() => div.style.display = 'none', 3000);
 }
 
-verificarSesion();
+init();

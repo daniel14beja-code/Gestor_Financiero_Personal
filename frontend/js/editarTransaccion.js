@@ -1,10 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 
-async function verificarSesion() {
-    const res = await fetch('/auth/sesion', { credentials: 'include' });
-    const data = await res.json();
-    if (!data.ok) { window.location.href = 'login.html'; return; }
+async function init() {
+    await cargarSidebar();
     await cargarCategorias();
     await cargarTransaccion();
 }
@@ -58,4 +56,4 @@ async function actualizar() {
     }
 }
 
-verificarSesion();
+init();

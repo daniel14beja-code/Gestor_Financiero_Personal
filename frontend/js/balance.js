@@ -1,7 +1,5 @@
-async function verificarSesion() {
-    const res = await fetch('/auth/sesion', { credentials: 'include' });
-    const data = await res.json();
-    if (!data.ok) { window.location.href = 'login.html'; return; }
+async function init() {
+    await cargarSidebar();
     cargarBalance();
 }
 
@@ -18,4 +16,4 @@ async function cargarBalance() {
     balEl.style.color  = parseFloat(b.balance_actual) >= 0 ? 'var(--success)' : 'var(--danger)';
 }
 
-verificarSesion();
+init();
