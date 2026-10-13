@@ -30,6 +30,7 @@ async function cargarSidebar() {
             <a href="regIngreso.html"       class="sidebar-link">➕ Registrar ingreso</a>
             <a href="regGasto.html"         class="sidebar-link">➖ Registrar gasto</a>
             <a href="balance.html"          class="sidebar-link">📊 Ver balance</a>
+            <a href="alcancias.html" class="sidebar-link">🐷 Alcancías</a>
             <a href="auditoria.html"        class="sidebar-link">🔍 Auditoría</a>
             ${esAdmin ? `
             <div class="sidebar-label" style="margin-top:20px;">Administración</div>

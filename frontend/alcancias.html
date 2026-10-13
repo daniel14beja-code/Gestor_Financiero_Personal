@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GestorF – Alcancías</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { padding: 0; align-items: stretch; }
+
+    .alcancias-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+    }
+
+    .alcancia-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: border-color 0.2s;
+    }
+
+    .alcancia-card:hover { border-color: var(--accent); }
+
+    .alcancia-nombre {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .alcancia-desc {
+        font-size: 0.85rem;
+        color: var(--muted);
+    }
+
+    .alcancia-saldo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+    .progress-bar {
+        background: var(--border);
+        border-radius: 99px;
+        height: 8px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 99px;
+        transition: width 0.4s ease;
+    }
+
+    .alcancia-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: var(--muted);
+    }
+
+    .alcancia-acciones {
+        display: flex;
+        gap: 8px;
+        margin-top: 4px;
+    }
+
+    .badge-bloqueada {
+        background: rgba(255,92,92,0.12);
+        color: var(--danger);
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 99px;
+    }
+
+    .badge-disponible {
+        background: rgba(74,222,128,0.12);
+        color: var(--success);
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 99px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px;
+        width: 100%;
+        max-width: 460px;
+        animation: fadeUp 0.3s ease;
+    }
+
+    .modal h3 { font-size: 1.1rem; margin-bottom: 20px; }
+    .modal-acciones { display: flex; gap: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar"></div>
+  <div class="main-content">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h2>Mis <span style="color:var(--accent)">Alcancías</span></h2>
+      <button class="btn btn-primary" style="width:auto;padding:10px 20px;" onclick="abrirModalCrear()">
+        + Nueva alcancía
+      </button>
+    </div>
+
+    <p style="color:var(--muted);font-size:0.9rem;">Guarda dinero de tu balance en alcancías con propósitos específicos.</p>
+
+    <div id="mensajeGlobal" class="alert-error" style="display:none;margin-top:16px;"></div>
+
+    <div class="alcancias-grid" id="gridAlcancias">
+      <p style="color:var(--muted);">Cargando...</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal crear alcancía -->
+<div class="modal-overlay" id="modalCrear">
+  <div class="modal">
+    <h3>Nueva <span style="color:var(--accent)">Alcancía</span></h3>
+    <div id="errorCrear" class="alert-error" style="display:none;margin-bottom:16px;"></div>
+    <div class="form-group">
+      <label>Nombre *</label>
+      <input type="text" id="crearNombre" placeholder="ej: Vacaciones 2027">
+    </div>
+    <div class="form-group">
+      <label>Propósito</label>
+      <input type="text" id="crearDesc" placeholder="Descripción opcional">
+    </div>
+    <div class="form-group">
+      <label>Meta de ahorro (opcional)</label>
+      <input type="number" id="crearMeta" step="0.01" min="0" placeholder="ej: 2000000">
+    </div>
+    <div class="form-group">
+      <label>Fecha de retiro (opcional)</label>
+      <input type="date" id="crearFecha">
+    </div>
+    <div class="modal-acciones">
+      <button class="btn btn-primary" style="flex:1;" onclick="crearAlcancia()">Crear</button>
+      <button class="btn btn-secondary" style="flex:1;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal depositar -->
+<div class="modal-overlay" id="modalDepositar">
+  <div class="modal">
+    <h3>Depositar en <span style="color:var(--accent)" id="nombreDepAlcancia"></span></h3>
+    <div id="errorDep" class="alert-error" style="display:none;margin-bottom:16px;"></div>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;">
+      Balance disponible: <strong id="balanceDisponible" style="color:var(--success)"></strong>
+    </p>
+    <div class="form-group">
+      <label>Monto *</label>
+      <input type="number" id="depMonto" step="0.01" min="0.01">
+    </div>
+    <div class="form-group">
+      <label>Descripción</label>
+      <input type="text" id="depDesc" placeholder="opcional">
+    </div>
+    <div class="modal-acciones">
+      <button class="btn btn-primary" style="flex:1;" onclick="depositar()">Depositar</button>
+      <button class="btn btn-secondary" style="flex:1;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal retirar -->
+<div class="modal-overlay" id="modalRetirar">
+  <div class="modal">
+    <h3>Retirar de <span style="color:var(--accent)" id="nombreRetAlcancia"></span></h3>
+    <div id="errorRet" class="alert-error" style="display:none;margin-bottom:16px;"></div>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;">
+      Saldo disponible: <strong id="saldoDisponible" style="color:var(--accent)"></strong>
+    </p>
+    <div class="form-group">
+      <label>Monto *</label>
+      <input type="number" id="retMonto" step="0.01" min="0.01">
+    </div>
+    <div class="form-group">
+      <label>Descripción</label>
+      <input type="text" id="retDesc" placeholder="opcional">
+    </div>
+    <div class="modal-acciones">
+      <button class="btn btn-primary" style="flex:1;" onclick="retirar()">Retirar</button>
+      <button class="btn btn-secondary" style="flex:1;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/sidebar.js"></script>
+<script src="js/alcancias.js"></script>
+</body>
+</html>

@@ -26,6 +26,7 @@ app.use('/categorias',    require('./routes/categorias'));
 app.use('/auditoria',     require('./routes/auditoria'));
 app.use('/perfiles',      require('./routes/perfiles'));
 app.use('/usuarios',      require('./routes/usuarios'));
+app.use('/alcancias',     require('./routes/alcancias'));
 
 // ← ARCHIVOS ESTÁTICOS AL FINAL
 app.use(express.static(path.join(__dirname, '../frontend')));
